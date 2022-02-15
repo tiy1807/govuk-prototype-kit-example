@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+
+{% set jugglingTrick = data['most-impressive-trick'] | default("Fountain", true) %}
+
+{% block pageTitle %}
+  {{ pageTitle }} – {{ serviceName }} – GOV.UK Prototype Kit
+{% endblock %}
