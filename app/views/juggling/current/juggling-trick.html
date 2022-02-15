@@ -1,7 +1,7 @@
 {% extends "juggling/current/base-form.html" %}
 
 {% set pageTitle = "What is your most impressive juggling trick?" %}
-{% set nextPage = "check-answers" %}
+{% set nextPage = "juggling-trick-submit" %}
 
 {% block formPageContent %}
 
@@ -13,7 +13,8 @@
       classes: "govuk-label--l",
       isPageHeading: true
     },
-    value: data['most-impressive-trick']
+    value: data['most-impressive-trick'],
+    errorMessage: errorMostImpressiveTrick
   }) }}
 
 {% endblock %}

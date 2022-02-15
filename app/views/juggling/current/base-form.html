@@ -9,6 +9,13 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
+      {% if errorList %}
+      {{ govukErrorSummary({
+        "titleText": "There is a problem",
+        "errorList": errorList
+      }) }}
+      {% endif %}
+
       <form class="form" action="{{ nextPage }}" method="post">
 
          {% block formPageContent %}{% endblock %}

@@ -1,7 +1,7 @@
 {% extends "juggling/current/base-form.html" %}
 
 {% set pageTitle = "How many balls can you juggle?" %}
-{% set nextPage = "juggling-trick" %}
+{% set nextPage = "juggling-balls-submit" %}
 
 {% block formPageContent %}
 
@@ -31,7 +31,8 @@
         text: "None - I cannot juggle",
         checked: checked("how-many-balls", "None - I cannot juggle")
       }
-    ]
+    ],
+    errorMessage: errorHowManyBalls
   }) }}
 
 {% endblock %}
