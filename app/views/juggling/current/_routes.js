@@ -9,11 +9,11 @@ function getErrorNameFromID(id) {
 }
 
 function addError(errors, id, errorMessage, href="") {
-  error.errorList.push({
+  errors.errorList.push({
       text: errorMessage,
       href: "#" + id + href
       })
-  error[getErrorNameFromID(id)] = {text: errorMessage}
+  errors[getErrorNameFromID(id)] = {text: errorMessage}
 }
 
 function checkCompleted(req, errors, id, errorMessage) {
@@ -50,6 +50,11 @@ router.post('/juggling-trick-submit', function (req, res) {
 
   // Make a variable and give it the value from 'how-many-balls'
   checkCompleted(req, error, 'most-impressive-trick', "Enter a description of your most impressive trick")
+
+  var howManyBalls = req.session.data['most-impressive-trick']
+  if (howManyBalls && howManyBalls.length < 10) {
+    addError(error, 'most-impressive-trick', "Juggling trick description must be 10 characters or more")
+  }
 
   if (error.errorList.length > 0) {
     res.render(req.baseUrl.substring(1) + '/juggling-trick', error)
