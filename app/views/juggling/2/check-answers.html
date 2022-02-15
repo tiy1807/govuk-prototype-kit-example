@@ -1,4 +1,4 @@
-{% extends "juggling/current/base.html" %}
+{% extends "juggling/2/base.html" %}
 
 {% set pageTitle = "Check your answers" %}
 
@@ -34,7 +34,7 @@
             Your most impressive juggling trick
           </dt>
           <dd class="govuk-summary-list__value">
-            {{ jugglingTrick }}
+            {{ data['most-impressive-trick'] }}
           </dd>
           <dd class="govuk-summary-list__actions">
             <a href="juggling-trick">

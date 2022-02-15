@@ -1,0 +1,19 @@
+{% extends "juggling/2/base-form.html" %}
+
+{% set pageTitle = "What is your most impressive juggling trick?" %}
+{% set nextPage = "check-answers" %}
+
+{% block formPageContent %}
+
+  {{ govukTextarea({
+    name: "most-impressive-trick",
+    id: "most-impressive-trick",
+    label: {
+      text: "What is your most impressive juggling trick?",
+      classes: "govuk-label--l",
+      isPageHeading: true
+    },
+    value: data['most-impressive-trick']
+  }) }}
+
+{% endblock %}
