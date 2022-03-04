@@ -1,0 +1,126 @@
+{% extends "juggling/current/base-form.html" %}
+
+{% set pageTitle = "Would you like a reminder to apply?" %}
+{% set pageHeading = "Would you like a reminder to apply?" %}
+{% set nextPage = "reminder-details-submit" %}
+
+{% block formPageContent %}
+
+{% set emailHtml %}
+{{ govukInput({
+  id: "contact-by-email",
+  name: "contact-by-email",
+  type: "email",
+  autocomplete: "email",
+  spellcheck: false,
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Email address"
+  },
+  value: data['contact-by-email'],
+  errorMessage: errorContactByEmail
+}) }}
+{% endset -%}
+
+{% set phoneHtml %}
+{{ govukInput({
+  id: "contact-by-phone",
+  name: "contact-by-phone",
+  type: "tel",
+  autocomplete: "tel",
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Phone number"
+  },
+  value: data['contact-by-phone'],
+  errorMessage: errorContactByPhone
+}) }}
+{% endset -%}
+
+{% set textHtml %}
+{{ govukInput({
+  id: "contact-by-text",
+  name: "contact-by-text",
+  type: "tel",
+  autocomplete: "tel",
+  classes: "govuk-!-width-one-third",
+  label: {
+    text: "Mobile phone number"
+  },
+  value: data['contact-by-text'],
+  errorMessage: errorContactByText
+}) }}
+{% endset -%}
+
+{{ govukRadios({
+  idPrefix: "contact",
+  name: "contact",
+  fieldset: {
+    legend: {
+      text: "How would you prefer to be contacted?"
+    }
+  },
+  hint: {
+    text: "Select one option."
+  },
+  items: [
+    {
+      value: "email",
+      text: "Email",
+      conditional: {
+        html: emailHtml
+      },
+      checked: checked('contact','email')
+    },
+    {
+      value: "phone",
+      text: "Phone",
+      conditional: {
+        html: phoneHtml
+      },
+      checked: checked('contact','phone')
+    },
+    {
+      value: "text",
+      text: "Text message",
+      conditional: {
+        html: textHtml
+      },
+      checked: checked('contact','text')
+    }
+  ],
+  errorMessage: errorContact
+}) }}
+
+{{ govukDateInput({
+  id: "reminder-date",
+  namePrefix: "reminder-date",
+  fieldset: {
+    legend: {
+      text: "When would you like a reminder?"
+    }
+  },
+  hint: {
+    text: "For example, 27 3 2022"
+  },
+  items: [
+    {
+      name: "day",
+      classes: "govuk-input--width-2" + (errorReminderDate.dayError | default("", true)),
+      value: data["reminder-date-day"]
+    },
+    {
+      name: "month",
+      classes: "govuk-input--width-2" + (errorReminderDate.monthError | default("", true)),
+      value: data["reminder-date-month"]
+    },
+    {
+      name: "year",
+      classes: "govuk-input--width-4" + (errorReminderDate.yearError | default("", true)),
+      value: data["reminder-date-year"]
+    }
+  ],
+  errorMessage: errorReminderDate
+}) }}
+
+{% endblock %}

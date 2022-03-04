@@ -1,0 +1,35 @@
+{% extends "juggling/current/base-form.html" %}
+
+{% set pageTitle = "Would you like a reminder to apply?" %}
+{% set pageHeading = "Would you like a reminder to apply?" %}
+{% set nextPage = "reminder-submit" %}
+
+{% block formPageContent %}
+
+  <p>You're not eligible for a juggling licence.</p>
+  <p>You can request a reminder to apply for a licence.</p>
+
+ {{ govukRadios({
+    idPrefix: "reminder",
+    name: "reminder",
+    fieldset: {
+      legend: {
+        text: "Would you like a reminder to apply?"
+      }
+    },
+    items: [
+      {
+        value: "Yes",
+        text: "Yes",
+        checked: checked("reminder", "Yes")
+      },
+      {
+        value: "No",
+        text: "No",
+        checked: checked("reminder", "No")
+      }
+    ],
+    errorMessage: errorReminder
+  }) }}
+
+{% endblock %}

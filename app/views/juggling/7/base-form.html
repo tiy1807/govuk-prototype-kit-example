@@ -1,4 +1,4 @@
-{% extends "juggling/current/base.html" %}
+{% extends "juggling/7/base.html" %}
 
 {% block beforeContent %}
   <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
@@ -16,19 +16,11 @@
       }) }}
       {% endif %}
 
-      {% if pageHeading %}
-      <h1 class="govuk-heading-l">{{ pageHeading }}</h1>
-      {% endif %}
-
-      <form class="form" action="{{ nextPage }}" method="post" novalidate>
+      <form class="form" action="{{ nextPage }}" method="post">
 
          {% block formPageContent %}{% endblock %}
 
-        {% if pageTitle == "Check your answers" %}
-          <button class="govuk-button" data-module="govuk-button">Submit</button>
-        {% else %}
-          <button class="govuk-button" data-module="govuk-button">Continue</button>
-        {% endif %}
+        <button class="govuk-button" data-module="govuk-button">Continue</button>
 
       </form>
 

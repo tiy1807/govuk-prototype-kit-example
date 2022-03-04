@@ -1,64 +1,129 @@
-{% extends "juggling/current/base.html" %}
+{% extends "juggling/current/base-form.html" %}
 
 {% set pageTitle = "Check your answers" %}
+{% set nextPage = "confirmation" %}
 
-{% block beforeContent %}
-  <a class="govuk-back-link" href="javascript:window.history.back()">Back</a>
-{% endblock %}
+{% block formPageContent %}
 
-{% block content %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
+<h1 class="govuk-heading-l">Check your answers before sending your application</h1>
 
-      <h1 class="govuk-heading-xl">Check your answers before sending your application</h1>
+{% if data['most-impressive-trick'] %}
+  {% set trickAnswer = {
+      key: {
+        text: "Your most impressive juggling trick"
+      },
+      value: {
+        text: jugglingTrick
+      },
+      actions: {
+        items: [
+          {
+            href: "juggling-trick",
+            text: "Change",
+            visuallyHiddenText: "most impressive trick"
+          }
+        ]
+      }
+    }
+%}
+{% elif data['reminder'] %}
+    {% set reminderAnswer = {
+      key: {
+        text: "Would you like a reminder to apply?"
+      },
+      value: {
+        text: data['reminder']
+      },
+      actions: {
+        items: [
+          {
+            href: "reminder",
+            text: "Change",
+            visuallyHiddenText: "whether you'd like a reminder"
+          }
+        ]
+      }
+    }
+    %}
+    {% if data['reminder'] == "Yes" %}
+        {% set reminderDate = { key: {
+                text: "Reminder date"
+              },
+              value: {
+                text: data["reminder-date-day"] + " " + data['reminder-date-month'] | toMonth + " " + data['reminder-date-year']
+              },
+              actions: {
+                items: [
+                  {
+                    href: "reminder-details",
+                    text: "Change",
+                    visuallyHiddenText: "reminder date"
+                  }
+                ]
+              }
+            }
+        %}
+        {% set reminderContact = { key: {
+                text: "Reminder contact method"
+              },
+              value: {
+                text: data["contact"] | capitalize
+              },
+              actions: {
+                items: [
+                  {
+                    href: "reminder-details",
+                    text: "Change",
+                    visuallyHiddenText: "reminder contact method"
+                  }
+                ]
+              }
+            }
+        %}
+        {% set reminderContactDetails = { key: {
+                text: data['contact'] | capitalize
+              },
+              value: {
+                text: data['contact-by-' + data['contact']]
+              },
+              actions: {
+                items: [
+                  {
+                    href: "reminder-details",
+                    text: "Change",
+                    visuallyHiddenText: data['contact']
+                  }
+                ]
+              }
+            }
+        %}
+    {% endif %}
+{% endif %}
 
-      <h2 class="govuk-heading-m">Personal details</h2>
-
-      <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Number of balls you can juggle
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{ data['how-many-balls'] }}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a href="juggling-balls">
-              Change
-              <span class="govuk-visually-hidden">  number of balls you can juggle</span>
-            </a>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
-            Your most impressive juggling trick
-          </dt>
-          <dd class="govuk-summary-list__value">
-            {{ jugglingTrick }}
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a href="juggling-trick">
-              Change
-              <span class="govuk-visually-hidden"> your most impressive juggling trick</span>
-            </a>
-          </dd>
-        </div>
-      </dl>
-
-      <h2 class="govuk-heading-m">Now send your application</h2>
-
-      <p>By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
-
-      <form action="confirmation" method="post" novalidate>
-
-        <input type="hidden" name="answers-checked" value="true">
-
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-          Accept and send
-        </button>
-
-      </form>
-
-    </div>
-</div>
+{{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: "Number of balls you can juggle"
+      },
+      value: {
+        text: data['how-many-balls'] | default("3 or more", true)
+      },
+      actions: {
+        items: [
+          {
+            href: "juggling-balls",
+            text: "Change",
+            visuallyHiddenText: "number of balls you can juggle"
+          }
+        ]
+      }
+    },
+    trickAnswer,
+    reminderAnswer,
+    reminderDate,
+    reminderContact,
+    reminderContactDetails
+  ]
+}) }}
 {% endblock %}
