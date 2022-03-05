@@ -23,6 +23,9 @@ const headReleaseArchiveFilename = `${headReleaseBasename}.zip`
 // Path is from https://github.com/actions/virtual-environments/blob/win19/20211110.1/images/win/Windows2019-Readme.md
 const bash = process.platform === 'win32' ? 'C:\\Program Files\\Git\\bin\\bash.exe' : '/bin/bash'
 
+child_process.execSync(
+    'git config --global init.defaultBranch main')
+
 /*
  * Test helpers
  */
